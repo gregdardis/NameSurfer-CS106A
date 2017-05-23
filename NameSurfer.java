@@ -70,7 +70,8 @@ public class NameSurfer extends Program implements NameSurferConstants {
 			/* Because findEntry returns null if the entry isn't in the database */
 			if (database.findEntry(afterCaseChange) != null) {
 				NameSurferEntry entry = database.findEntry(afterCaseChange);
-				System.out.println(entry.toString());
+				graph.addEntry(entry);
+				graph.update();
 			}
 		} else if (source == clearButton) {
 			/* Clear all graphed stuff */

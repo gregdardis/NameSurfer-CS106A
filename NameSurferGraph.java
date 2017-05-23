@@ -16,12 +16,13 @@ various names by arranging the appropriate GLine and GLabel objects on the scree
 public class NameSurferGraph extends GCanvas
 	implements NameSurferConstants, ComponentListener {
 	
-//	private final double TOP_OF_GRAPH = GRAPH_MARGIN_SIZE;
-//	private final double BOTTOM_OF_GRAPH = getHeight() - GRAPH_MARGIN_SIZE;
 	private final int LABEL_OFFSET_FROM_VERTICAL_LINE = 2;
 	private final int YEARS_PER_DECADE = 10;
 	private final int LABEL_OFFSET_FROM_BOTTOM_HORIZONTAL_LINE = 15;
-
+	
+	/* Private instance variables */
+	ArrayList<NameSurferEntry> entries = new ArrayList<NameSurferEntry>();
+	
 	/**
 	* Creates a new NameSurferGraph object that displays the data.
 	*/
@@ -34,7 +35,7 @@ public class NameSurferGraph extends GCanvas
 	* Clears the list of name surfer entries stored inside this class.
 	*/
 	public void clear() {
-		//	 You fill this in //
+		entries.clear();
 	}
 	
 	/* Method: addEntry(entry) */
@@ -44,10 +45,10 @@ public class NameSurferGraph extends GCanvas
 	* simply stores the entry; the graph is drawn by calling update.
 	*/
 	public void addEntry(NameSurferEntry entry) {
-		// You fill this in //
+		if (!entries.contains(entry)) {
+			entries.add(entry);
+		}
 	}
-	
-	
 	
 	/**
 	* Updates the display image by deleting all the graphical objects
@@ -60,10 +61,21 @@ public class NameSurferGraph extends GCanvas
 		double topOfGraph = GRAPH_MARGIN_SIZE;
 		double bottomOfGraph = getHeight() - GRAPH_MARGIN_SIZE;
 		
+		removeAll();
 		drawVerticalLines();
 		drawHorizontalLines(topOfGraph, bottomOfGraph);
 		drawYearLabels(bottomOfGraph);
+		drawEntriesOnGraph();
 		
+	}
+	
+	private void drawEntriesOnGraph() {
+		for (int j = 0; j < entries.size(); j++) {
+			for (int i = 0; i < NDECADES; i++) {
+				NameSurferEntry entry = entries.get(j);
+				add(new GLabel(entry.getName() + " " + entry.getRank(i), i * (getWidth() / NDECADES) + LABEL_OFFSET_FROM_VERTICAL_LINE, getHeight() / 2)); 
+			} 
+		}
 	}
 	
 	/* Labels the years at the bottom of the graph */
