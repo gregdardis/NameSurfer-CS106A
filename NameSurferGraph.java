@@ -73,9 +73,18 @@ public class NameSurferGraph extends GCanvas
 		for (int j = 0; j < entries.size(); j++) {
 			for (int i = 0; i < NDECADES; i++) {
 				NameSurferEntry entry = entries.get(j);
-				add(new GLabel(entry.getName() + " " + entry.getRank(i), i * (getWidth() / NDECADES) + LABEL_OFFSET_FROM_VERTICAL_LINE, getHeight() / 2)); 
+				double y = findLabelYCoordinate(entry, i);
+				add(new GLabel(entry.getName() + " " + entry.getRank(i), i * (getWidth() / NDECADES) + LABEL_OFFSET_FROM_VERTICAL_LINE, y)); 
 			} 
 		}
+	}
+	
+	private double findLabelYCoordinate(NameSurferEntry entry, int index) {
+		if (entry.getRank(index) == 0) {
+			return getHeight() - GRAPH_MARGIN_SIZE;
+		}
+		double y = GRAPH_MARGIN_SIZE + ((entry.getRank(index) / MAX_RANK) * (getHeight() - (2 * GRAPH_MARGIN_SIZE)));
+		return y;
 	}
 	
 	/* Labels the years at the bottom of the graph */

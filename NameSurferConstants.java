@@ -24,7 +24,7 @@ public interface NameSurferConstants {
 	public static final int NDECADES = 11;
 
 /** The maximum rank in the database */
-	public static final int MAX_RANK = 1000;
+	public static final double MAX_RANK = 1000.0;
 
 /** The number of pixels to reserve at the top and bottom */
 	public static final int GRAPH_MARGIN_SIZE = 20;
