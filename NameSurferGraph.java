@@ -16,9 +16,13 @@ various names by arranging the appropriate GLine and GLabel objects on the scree
 public class NameSurferGraph extends GCanvas
 	implements NameSurferConstants, ComponentListener {
 	
-	private final int LABEL_OFFSET_FROM_VERTICAL_LINE = 2;
-	private final int YEARS_PER_DECADE = 10;
-	private final int LABEL_OFFSET_FROM_BOTTOM_HORIZONTAL_LINE = 15;
+	private static final int LABEL_OFFSET_FROM_VERTICAL_LINE = 2;
+	private static final int YEARS_PER_DECADE = 10;
+	private static final int LABEL_OFFSET_FROM_BOTTOM_HORIZONTAL_LINE = 15;
+	private static final int BLACK = 0;
+	private static final int RED = 1;
+	private static final int BLUE = 2;
+	private static final int MAGENTA = 3;
 	
 	/* Private instance variables */
 	ArrayList<NameSurferEntry> entries = new ArrayList<NameSurferEntry>();
@@ -71,7 +75,9 @@ public class NameSurferGraph extends GCanvas
 	
 	private void drawEntriesOnGraph() {
 		double y2 = 0;
+		Color color = Color.BLACK;
 		for (int j = 0; j < entries.size(); j++) {
+			color = chooseColor(j);
 			for (int i = 0; i < NDECADES; i++) {
 				NameSurferEntry entry = entries.get(j);
 				double y1 = findLabelYCoordinate(entry, i);
@@ -80,12 +86,35 @@ public class NameSurferGraph extends GCanvas
 				if (i < NDECADES - 1) {
 					y2 = findLabelYCoordinate(entry, i + 1);
 				}
-				
-				add(new GLabel(entry.getName() + " " + entry.getRank(i), i * (getWidth() / NDECADES) + LABEL_OFFSET_FROM_VERTICAL_LINE, y1)); 
-				add(new GLine(i * (getWidth() / NDECADES), y1, (i+1) * (getWidth() / NDECADES), y2));
+				GLabel nameAndRank = new GLabel(entry.getName() + " " + entry.getRank(i), i * (getWidth() / NDECADES) + LABEL_OFFSET_FROM_VERTICAL_LINE, y1);
+				GLine lineAcrossDecade = new GLine(i * (getWidth() / NDECADES), y1, (i+1) * (getWidth() / NDECADES), y2);
+				nameAndRank.setColor(color);
+				lineAcrossDecade.setColor(color);
+				add(nameAndRank);
+				add(lineAcrossDecade);
 			} 
 		}
 	}
+	
+	/* Returns a color for the next labels and graph lines to be printed, cycling through them for each name searched */
+	private Color chooseColor(int arrayListIndex) {
+		int whichColor = 0;
+		whichColor = arrayListIndex % 4;
+		if (whichColor == BLACK) {
+			return Color.BLACK;
+		}
+		if (whichColor == RED) {
+			return Color.RED;
+		}
+		if (whichColor == BLUE) {
+			return Color.BLUE;
+		}
+		if (whichColor == MAGENTA) {
+			return Color.MAGENTA;
+		}
+		return Color.BLACK;
+	}
+	
 	/* Finds at what height a label and graph line should be based on that entries rank
 	 * and which part of the graph it's in (index) */
 	private double findLabelYCoordinate(NameSurferEntry entry, int index) {
