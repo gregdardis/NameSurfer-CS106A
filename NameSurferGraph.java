@@ -70,11 +70,17 @@ public class NameSurferGraph extends GCanvas
 	}
 	
 	private void drawEntriesOnGraph() {
+		double y2 = 0;
 		for (int j = 0; j < entries.size(); j++) {
 			for (int i = 0; i < NDECADES; i++) {
 				NameSurferEntry entry = entries.get(j);
-				double y = findLabelYCoordinate(entry, i);
-				add(new GLabel(entry.getName() + " " + entry.getRank(i), i * (getWidth() / NDECADES) + LABEL_OFFSET_FROM_VERTICAL_LINE, y)); 
+				double y1 = findLabelYCoordinate(entry, i);
+				/* Don't have data for ahead of the year 2000 so can't assign a new y coordinate for the rank of that decade */
+				if (i < NDECADES - 1) {
+					y2 = findLabelYCoordinate(entry, i + 1);
+				}
+				add(new GLabel(entry.getName() + " " + entry.getRank(i), i * (getWidth() / NDECADES) + LABEL_OFFSET_FROM_VERTICAL_LINE, y1)); 
+				add(new GLine(i * (getWidth() / NDECADES), y1, (i+1) * (getWidth() / NDECADES), y2));
 			} 
 		}
 	}
