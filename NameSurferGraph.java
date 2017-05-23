@@ -15,6 +15,12 @@ import java.awt.*;
 various names by arranging the appropriate GLine and GLabel objects on the screen */
 public class NameSurferGraph extends GCanvas
 	implements NameSurferConstants, ComponentListener {
+	
+//	private final double TOP_OF_GRAPH = GRAPH_MARGIN_SIZE;
+//	private final double BOTTOM_OF_GRAPH = getHeight() - GRAPH_MARGIN_SIZE;
+	private final int LABEL_OFFSET_FROM_VERTICAL_LINE = 2;
+	private final int YEARS_PER_DECADE = 10;
+	private final int LABEL_OFFSET_FROM_BOTTOM_HORIZONTAL_LINE = 15;
 
 	/**
 	* Creates a new NameSurferGraph object that displays the data.
@@ -51,10 +57,37 @@ public class NameSurferGraph extends GCanvas
 	* the size of the canvas changes.
 	*/
 	public void update() {
+		double topOfGraph = GRAPH_MARGIN_SIZE;
+		double bottomOfGraph = getHeight() - GRAPH_MARGIN_SIZE;
+		
+		drawVerticalLines();
+		drawHorizontalLines(topOfGraph, bottomOfGraph);
+		drawYearLabels(bottomOfGraph);
 		
 	}
 	
+	/* Labels the years at the bottom of the graph */
+	private void drawYearLabels(double bottomOfGraph) {
+		for (int i = 1; i < NDECADES - 1; i++) {
+			String year = "19" + (i * YEARS_PER_DECADE);
+			add(new GLabel(year, i * (getWidth() / NDECADES) + LABEL_OFFSET_FROM_VERTICAL_LINE, bottomOfGraph + LABEL_OFFSET_FROM_BOTTOM_HORIZONTAL_LINE));
+		}
+		add(new GLabel("1900", LABEL_OFFSET_FROM_VERTICAL_LINE, bottomOfGraph + LABEL_OFFSET_FROM_BOTTOM_HORIZONTAL_LINE));
+		add(new GLabel("2000", LABEL_OFFSET_FROM_VERTICAL_LINE + ((NDECADES - 1) * (getWidth() / NDECADES)), bottomOfGraph + LABEL_OFFSET_FROM_BOTTOM_HORIZONTAL_LINE));
+	}
 	
+	/* Draws the vertical lines for the graph */
+	private void drawVerticalLines() {
+		for (int i = 0; i < NDECADES + 1; i++) {
+			add(new GLine(i * (getWidth() / NDECADES), 0, i * (getWidth() / NDECADES), getHeight()));
+		}
+	}
+	
+	/* Draws the horizontal lines for the graph */
+	private void drawHorizontalLines(double topOfGraph, double bottomOfGraph) {
+			add(new GLine(0, topOfGraph, getWidth(), topOfGraph));
+			add(new GLine(0, bottomOfGraph, getWidth(), bottomOfGraph));
+	}
 	
 	
 	/* Implementation of the ComponentListener interface */

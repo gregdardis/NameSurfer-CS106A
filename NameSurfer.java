@@ -63,11 +63,14 @@ public class NameSurfer extends Program implements NameSurferConstants {
 		if (source == graphButton || source == nameField) {
 			/* Graph name to screen */
 			String beforeCaseChange = nameField.getText();
-			String afterCaseChange = beforeCaseChange.substring(0, 1).toUpperCase() + beforeCaseChange.substring(1).toLowerCase();
+			String afterCaseChange = beforeCaseChange;
+			if (beforeCaseChange.length() >= 2) {
+				afterCaseChange = beforeCaseChange.substring(0, 1).toUpperCase() + beforeCaseChange.substring(1).toLowerCase();
+			}
 			/* Because findEntry returns null if the entry isn't in the database */
 			if (database.findEntry(afterCaseChange) != null) {
 				NameSurferEntry entry = database.findEntry(afterCaseChange);
-				
+				System.out.println(entry.toString());
 			}
 		} else if (source == clearButton) {
 			/* Clear all graphed stuff */
