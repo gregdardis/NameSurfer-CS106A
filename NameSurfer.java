@@ -75,7 +75,8 @@ public class NameSurfer extends Program implements NameSurferConstants {
 			}
 		} else if (source == clearButton) {
 			/* Clear all graphed stuff */
-			
+			graph.clear();
+			graph.update();
 		} 
 	}
 }

@@ -75,16 +75,19 @@ public class NameSurferGraph extends GCanvas
 			for (int i = 0; i < NDECADES; i++) {
 				NameSurferEntry entry = entries.get(j);
 				double y1 = findLabelYCoordinate(entry, i);
+				
 				/* Don't have data for ahead of the year 2000 so can't assign a new y coordinate for the rank of that decade */
 				if (i < NDECADES - 1) {
 					y2 = findLabelYCoordinate(entry, i + 1);
 				}
+				
 				add(new GLabel(entry.getName() + " " + entry.getRank(i), i * (getWidth() / NDECADES) + LABEL_OFFSET_FROM_VERTICAL_LINE, y1)); 
 				add(new GLine(i * (getWidth() / NDECADES), y1, (i+1) * (getWidth() / NDECADES), y2));
 			} 
 		}
 	}
-	
+	/* Finds at what height a label and graph line should be based on that entries rank
+	 * and which part of the graph it's in (index) */
 	private double findLabelYCoordinate(NameSurferEntry entry, int index) {
 		if (entry.getRank(index) == 0) {
 			return getHeight() - GRAPH_MARGIN_SIZE;
