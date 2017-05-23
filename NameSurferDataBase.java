@@ -1,3 +1,10 @@
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.HashMap;
+
+import acm.util.ErrorException;
+
 /*
  * File: NameSurferDataBase.java
  * -----------------------------
@@ -11,6 +18,8 @@
 
 public class NameSurferDataBase implements NameSurferConstants {
 	
+	private HashMap<String, NameSurferEntry> database;
+	
 /* Constructor: NameSurferDataBase(filename) */
 /**
  * Creates a new NameSurferDataBase and initializes it using the
@@ -19,7 +28,36 @@ public class NameSurferDataBase implements NameSurferConstants {
  * occurs as the file is being read.
  */
 	public NameSurferDataBase(String filename) {
-		// You fill this in //
+		BufferedReader rd = createBufferedReader(filename);
+		database = new HashMap<String, NameSurferEntry>();
+		addToDatabase(rd);
+	}
+	
+	private void addToDatabase(BufferedReader rd) {
+		try {
+			while(true) {
+				String line = rd.readLine();
+				if (line == null) break;
+				NameSurferEntry entry = new NameSurferEntry(line);
+				database.put(entry.getName(), entry);
+			}
+			rd.close();
+		} catch (IOException ex) {
+			throw new ErrorException(ex);
+		}
+	}
+	
+	/* Opens a BufferedReader and returns that BufferedReader */
+	private BufferedReader createBufferedReader(String filename) {
+		BufferedReader rd = null;
+		while (rd == null) {
+			try {
+				rd = new BufferedReader(new FileReader(filename));
+			} catch (IOException ex) {
+				System.out.println("bad file name");
+			}
+		}
+		return rd;
 	}
 	
 /* Method: findEntry(name) */
@@ -29,8 +67,7 @@ public class NameSurferDataBase implements NameSurferConstants {
  * method returns null.
  */
 	public NameSurferEntry findEntry(String name) {
-		// You need to turn this stub into a real implementation //
-		return null;
+		return database.get(name);
 	}
 }
 

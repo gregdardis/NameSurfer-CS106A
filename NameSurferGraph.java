@@ -51,7 +51,7 @@ public class NameSurferGraph extends GCanvas
 	* the size of the canvas changes.
 	*/
 	public void update() {
-		//	 You fill this in //
+		
 	}
 	
 	

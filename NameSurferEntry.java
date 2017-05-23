@@ -9,8 +9,17 @@
 import acm.util.*;
 import java.util.*;
 
+/* This class ties together all the information for a particular name.
+Given a NameSurferEntry object, you can find out what name it corresponds to and
+what its popularity rank was in each decade. */
 public class NameSurferEntry implements NameSurferConstants {
 
+	/* Private instance variables */
+	private String name;
+	private int[] decadeRank = new int[NDECADES];
+	private String[] parts;
+	String givenLine;
+	
 /* Constructor: NameSurferEntry(line) */
 /**
  * Creates a new NameSurferEntry from a data line as it appears
@@ -19,7 +28,12 @@ public class NameSurferEntry implements NameSurferConstants {
  * decade.
  */
 	public NameSurferEntry(String line) {
-		// You fill this in //
+		givenLine = line;
+		parts = line.split(" ");
+		this.name = parts[0];
+		for (int i = 0; i < NDECADES; i++) {
+			decadeRank[i] = Integer.parseInt(parts[i+1]);
+		}
 	}
 
 /* Method: getName() */
@@ -27,8 +41,7 @@ public class NameSurferEntry implements NameSurferConstants {
  * Returns the name associated with this entry.
  */
 	public String getName() {
-		// You need to turn this stub into a real implementation //
-		return null;
+		return name;
 	}
 
 /* Method: getRank(decade) */
@@ -40,7 +53,9 @@ public class NameSurferEntry implements NameSurferConstants {
  * not appear in a decade, the rank value is 0.
  */
 	public int getRank(int decade) {
-		// You need to turn this stub into a real implementation //
+		if (decade >= 0 && decade < NDECADES) {
+			return decadeRank[decade];
+		}
 		return 0;
 	}
 
@@ -50,8 +65,7 @@ public class NameSurferEntry implements NameSurferConstants {
  * NameSurferEntry.
  */
 	public String toString() {
-		// You need to turn this stub into a real implementation //
-		return "";
+		return givenLine;
 	}
 }
 

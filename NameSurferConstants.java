@@ -28,5 +28,8 @@ public interface NameSurferConstants {
 
 /** The number of pixels to reserve at the top and bottom */
 	public static final int GRAPH_MARGIN_SIZE = 20;
+	
+/** The maximum length of a name the user can input */
+	public static final int MAX_NAME_LENGTH = 25;
 
 }
