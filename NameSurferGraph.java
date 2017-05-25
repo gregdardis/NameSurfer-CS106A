@@ -155,3 +155,4 @@ public class NameSurferGraph extends GCanvas
 	public void componentResized(ComponentEvent e) { update(); }
 	public void componentShown(ComponentEvent e) { }
 }
+//TODO: FIX COLOR PICKING BY USING AN ARRAY INSTEAD OF IF ELSE
