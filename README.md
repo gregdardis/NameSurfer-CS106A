@@ -1,6 +1,6 @@
-Project from Stanford's CS106A class, made using Eclipse.
+**Project from Stanford's CS106A class, made using Eclipse.**
 
-# To run on command line:
+# To run from command line:
 
 ## Windows:
 Compile: javac -cp ".;acm.jar" *.java
